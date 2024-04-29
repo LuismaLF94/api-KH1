@@ -4,14 +4,14 @@ import logger from "../utils/logger.js";
 
 import config from "../config.js";
 
-export function checkToken(req, res, next){
+export function checkToken(req, _res, next){
     console.log(req.headers.authorization)
 
     const {authorization} = req.headers;
 
     if(!authorization) throw HttpStatusError(401, 'No token provided');
 
-    const [_bearer, token] = authorization.split(' ');
+    const [_bearer, token] = authorization.split(' ');  // Bearer DFSEK·MRFOEFSOKF
 
     try{
         jwt.verify(token, config.app.secretKey);

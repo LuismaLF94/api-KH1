@@ -1,4 +1,4 @@
-{
+export default [{
     "env": {
         "es2021": true,
         "node": true
@@ -13,4 +13,4 @@
         "no-use-before-define": 0,
         "no-plusplus": 0
     }
-}
+}]

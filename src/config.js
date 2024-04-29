@@ -1,11 +1,10 @@
 import 'dotenv/config';
 
 const config = {
-      port: process.env.PORT || 8080,
-    icon: {
-        url: process.env.ICON_URL,
-        apiKey: process.env.ICON_API_KEY,
-    },
+    port: process.env.PORT || 8080,
+    app: {
+        secretKey:process.env.SECRET_KEY
+    }
 }
 
 export const jph = {
