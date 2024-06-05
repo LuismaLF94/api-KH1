@@ -1,11 +1,11 @@
 export function pingController(req, res) {
     res.send('pong');
-}
+};
 
 export function numeroAleatorioController(req, res) {
     const numeroAleatorio = Math.floor(Math.random() * 1000000);
     res.send(numeroAleatorio.toString());
-}
+};
 
 function countBits(n) {
     const binaryStr = n.toString(2);
@@ -16,7 +16,7 @@ function countBits(n) {
       }
     }
     return count;
-  }
+  };
 
   export function countBitsController(req, res) {
     const { number } = req.params;
@@ -27,7 +27,7 @@ function countBits(n) {
     }
     const result = countBits(parsedNumber);
     res.send(`El número de bits establecidos en ${parsedNumber} es: ${result}`);
-  }
+  };
 
   function digitalRoot(n) {
     function sumaDigitos(num) {
@@ -46,7 +46,7 @@ function countBits(n) {
     }
 
     return sumaDigitos(n);
-}
+};
 
 export function digitalRootController(req, res) {
   const { number } = req.params;
@@ -59,7 +59,7 @@ export function digitalRootController(req, res) {
 
   const root = digitalRoot(n);
   res.send(root.toString());
-}
+};
 
 function dnaStrand(dna) {
   const complementos = {
@@ -71,13 +71,13 @@ function dnaStrand(dna) {
   const dnaMayusculas = dna.toUpperCase();
   const complemento = dnaMayusculas.split('').map(nucleotido => complementos[nucleotido]).join('');
   return complemento;
-}
+};
 
 export function dnaController(req, res) {
   const dna = req.query.dna;
   const complemento = dnaStrand(dna);
   res.send(complemento);
-}
+};
 
 export function findOdd(arr) {
   let frequency = {};
@@ -91,7 +91,7 @@ export function findOdd(arr) {
           return parseInt(num);
       }
   }
-}
+};
 
 
 export function findOddController(req, res) {
@@ -101,7 +101,7 @@ export function findOddController(req, res) {
   }
   const result = findOdd(numbers);
   res.json({ oddNumber: result });
-}
+};
 
 function digPow(n, p){
   let digits = n.toString();
@@ -116,7 +116,7 @@ function digPow(n, p){
   } else {
       return -1;
   }
-}
+};
 
 export function digPowController(req, res) {
   const { n, p } = req.query;
@@ -127,5 +127,5 @@ export function digPowController(req, res) {
 
   const result = digPow(parseInt(n), parseInt(p));
   res.json({ result });
-}
+};
 
