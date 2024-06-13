@@ -3,9 +3,12 @@ import { createHeartless, getHeartless, updHeartless, delHeartless } from '../co
 
 const router = Router();
 
-router.get('/', getHeartless);
+router.get('/:id?', getHeartless); 
+
 router.post('/', createHeartless);
-router.put('/', updHeartless);
-router.delete('/', delHeartless);
+
+router.put('/:id', updHeartless);
+
+router.delete('/:id', delHeartless);
 
 export default router;

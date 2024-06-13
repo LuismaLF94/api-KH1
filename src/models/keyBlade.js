@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const keyBladeSchema = new Schema({
     name: String,
     damage: String,
-    PM: String,
+    pm: String,
     criticalHit: String,
     bonusCritical: String,
     description: String

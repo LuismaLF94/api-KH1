@@ -1,8 +1,7 @@
 import Character from '../../models/character.js';
 
-
-export async function findCharacter(name) {
-    return Character.findOne({ name });
+export async function findCharacterById(id) {
+    return Character.findById(id);
 };
 
 export async function insertCharacter(characterData) {
@@ -10,14 +9,14 @@ export async function insertCharacter(characterData) {
     return newCharacter.save();
 };
 
-export async function updateCharacter(name, updatedData) {
-    return Character.findOneAndUpdate({ name }, updatedData, { new: true });
+export async function updateCharacter(id, updatedData) {
+    return Character.findByIdAndUpdate(id, updatedData, { new: true });
 };
 
-export async function deleteCharacter(name) {
-    return Character.findOneAndDelete({ name });
+export async function deleteCharacter(id) {
+    return Character.findByIdAndDelete(id);
 };
 
-export async function findAllCharacters() {
-    return Character.find(); 
+export async function findAllCharacters(query = {}) {
+    return Character.find(query);
 };

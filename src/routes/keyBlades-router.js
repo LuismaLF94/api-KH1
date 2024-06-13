@@ -1,11 +1,15 @@
+
 import { Router } from 'express';
 import { createKeyBlade, getKeyBlade, updKeyBlade, delKeyBlade } from '../controllers/keyBlade-controller.js';
 
 const router = Router();
 
-router.get('/', getKeyBlade);
+router.get('/:id?', getKeyBlade);
+
 router.post('/', createKeyBlade);
-router.put('/', updKeyBlade);
-router.delete('/', delKeyBlade);
+
+router.put('/:id', updKeyBlade);
+
+router.delete('/:id', delKeyBlade);
 
 export default router;

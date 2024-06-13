@@ -1,23 +1,4 @@
-import { insertCharacter, findCharacter, findAllCharacters, updateCharacter, deleteCharacter } from '../services/mongodb/character.js';
-
-export async function getCharacter(req, res) {
-    const name = req.query.name;
-    try {
-        if (name) {
-            const character = await findCharacter(name);
-            if (character) {
-                res.status(200).json(character);
-            } else {
-                res.status(404).json({ message: 'Character not found' });
-            }
-        } else {
-            const characters = await findAllCharacters();
-            res.status(200).json(characters);
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching character(s)', error });
-    }
-};
+import { insertCharacter, findCharacterById, findAllCharacters, updateCharacter, deleteCharacter } from '../services/mongodb/character.js';
 
 export async function createCharacter(req, res) {
     const character = req.body;
@@ -29,11 +10,38 @@ export async function createCharacter(req, res) {
     }
 };
 
+export async function getCharacter(req, res) {
+    const { id } = req.params;
+    const { level, hp, origin } = req.query;
+
+    try {
+        if (id) {
+            const character = await findCharacterById(id);
+            if (character) {
+                res.status(200).json(character);
+            } else {
+                res.status(404).json({ message: 'Character not found' });
+            }
+        } else {
+            // Filtra los personajes según los parámetros proporcionados
+            const query = {};
+            if (level) query.level = level;
+            if (hp) query.hp = hp;
+            if (origin) query.origin = origin;
+
+            const characters = await findAllCharacters(query);
+            res.status(200).json(characters);
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching character(s)', error });
+    }
+};
+
 export async function updCharacter(req, res) {
-    const name = req.query.name;
+    const { id } = req.params;
     const updatedCharacterData = req.body;
     try {
-        const characterDoc = await updateCharacter(name, updatedCharacterData);
+        const characterDoc = await updateCharacter(id, updatedCharacterData);
         if (characterDoc) {
             res.status(200).json(characterDoc);
         } else {
@@ -45,9 +53,9 @@ export async function updCharacter(req, res) {
 };
 
 export async function delCharacter(req, res) {
-    const name = req.query.name;
+    const { id } = req.params;
     try {
-        const result = await deleteCharacter(name);
+        const result = await deleteCharacter(id);
         if (result) {
             res.status(200).json({ message: 'Character deleted successfully' });
         } else {

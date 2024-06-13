@@ -1,9 +1,9 @@
-import { insertWorld, findWorldByName, updateWorld, deleteWorld, findAllWorlds } from '../services/mongodb/world.js';
+import { insertWorld, findWorldById, updateWorld, deleteWorld, findAllWorlds } from '../services/mongodb/world.js';
 
 export async function createWorld(req, res) {
     const worldData = req.body;
     try {
-        const savedWorld = insertWorld(worldData);
+        const savedWorld = await insertWorld(worldData);
         res.status(201).json(savedWorld);
     } catch (error) {
         res.status(500).json({ message: 'Error creating World', error });
@@ -11,10 +11,10 @@ export async function createWorld(req, res) {
 };
 
 export async function getWorld(req, res) {
-    const { name } = req.query;
+    const { id } = req.params;
     try {
-        if (name) {
-            const world = await findWorldByName(name);
+        if (id) {
+            const world = await findWorldById(id);
             if (world) {
                 res.status(200).json(world);
             } else {
@@ -30,10 +30,10 @@ export async function getWorld(req, res) {
 };
 
 export async function updWorld(req, res) {
-    const { name } = req.query;
+    const { id } = req.params;
     const updatedWorldData = req.body;
     try {
-        const updatedWorld = await updateWorld(name, updatedWorldData);
+        const updatedWorld = await updateWorld(id, updatedWorldData);
         if (updatedWorld) {
             res.status(200).json(updatedWorld);
         } else {
@@ -45,9 +45,9 @@ export async function updWorld(req, res) {
 };
 
 export async function delWorld(req, res) {
-    const { name } = req.query;
+    const { id } = req.params;
     try {
-        const result = await deleteWorld(name);
+        const result = await deleteWorld(id);
         if (result) {
             res.status(200).json({ message: 'World deleted successfully' });
         } else {

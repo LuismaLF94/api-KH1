@@ -1,21 +1,20 @@
-import { insertItem, findItemByName, updateItem, deleteItem, findAllItems } from '../services/mongodb/item.js';
+import { insertItem, findItemById, updateItem, deleteItem, findAllItems } from '../services/mongodb/item.js';
 
 export async function createItem(req, res) {
     const itemData = req.body;
     try {
-        const savedItem = insertItem(itemData);
+        const savedItem = await insertItem(itemData); // Espera la inserción para obtener el documento creado
         res.status(201).json(savedItem);
     } catch (error) {
         res.status(500).json({ message: 'Error creating Item', error });
     }
 };
 
-
 export async function getItem(req, res) {
-    const { name } = req.query;
+    const { id } = req.params; // Cambia de query a params
     try {
-        if (name) {
-            const item = await findItemByName(name);
+        if (id) {
+            const item = await findItemById(id);
             if (item) {
                 res.status(200).json(item);
             } else {
@@ -31,10 +30,10 @@ export async function getItem(req, res) {
 };
 
 export async function updItem(req, res) {
-    const { name } = req.query;
+    const { id } = req.params; // Cambia de query a params
     const updatedItemData = req.body;
     try {
-        const updatedItem = await updateItem(name, updatedItemData);
+        const updatedItem = await updateItem(id, updatedItemData);
         if (updatedItem) {
             res.status(200).json(updatedItem);
         } else {
@@ -46,9 +45,9 @@ export async function updItem(req, res) {
 };
 
 export async function delItem(req, res) {
-    const { name } = req.query;
+    const { id } = req.params; // Cambia de query a params
     try {
-        const result = await deleteItem(name);
+        const result = await deleteItem(id);
         if (result) {
             res.status(200).json({ message: 'Item deleted successfully' });
         } else {

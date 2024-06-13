@@ -1,7 +1,7 @@
 import Heartless from '../../models/heartless.js';
 
-export async function findHeartlessByName(name) {
-    return Heartless.findOne({ name });
+export async function findHeartlessById(id) {
+    return Heartless.findById(id);
 };
 
 export async function insertHeartless(heartlessData) {
@@ -9,14 +9,14 @@ export async function insertHeartless(heartlessData) {
     return newHeartless.save();
 };
 
-export async function updateHeartless(name, updatedData) {
-    return Heartless.findOneAndUpdate({ name }, updatedData, { new: true });
+export async function updateHeartless(id, updatedData) {
+    return Heartless.findByIdAndUpdate(id, updatedData, { new: true });
 };
 
-export async function deleteHeartless(name) {
-    return Heartless.findOneAndDelete({ name });
+export async function deleteHeartless(id) {
+    return Heartless.findByIdAndDelete(id);
 };
 
-export async function findAllHeartless() {
-    return Heartless.find();
+export async function findAllHeartless(query = {}) {
+    return Heartless.find(query);
 };

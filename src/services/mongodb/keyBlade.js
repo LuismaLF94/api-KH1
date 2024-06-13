@@ -5,18 +5,18 @@ export async function insertKeyBlade(keyBladeData) {
     return newKeyBlade.save();
 };
 
-export async function findKeyBladeByName(name) {
-    return KeyBlade.findOne({ name });
+export async function findKeyBladeById(id) {
+    return KeyBlade.findById(id);
 };
 
-export async function updateKeyBlade(name, updatedData) {
-    return KeyBlade.findOneAndUpdate({ name }, updatedData, { new: true });
+export async function updateKeyBlade(id, updatedData) {
+    return KeyBlade.findByIdAndUpdate(id, updatedData, { new: true });
 };
 
-export async function deleteKeyBlade(name) {
-    return KeyBlade.findOneAndDelete({ name });
+export async function deleteKeyBlade(id) {
+    return KeyBlade.findByIdAndDelete(id);
 };
 
-export async function findAllKeyBlades() {
-    return KeyBlade.find();
+export async function findAllKeyBlades(query = {}) {
+    return KeyBlade.find(query);
 };

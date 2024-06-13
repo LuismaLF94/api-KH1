@@ -1,9 +1,9 @@
-import { insertHeartless, findHeartlessByName, updateHeartless, deleteHeartless, findAllHeartless } from '../services/mongodb/heartless.js';
+import { insertHeartless, findHeartlessById, updateHeartless, deleteHeartless, findAllHeartless } from '../services/mongodb/heartless.js';
 
 export async function createHeartless(req, res) {
     const heartlessData = req.body;
     try {
-        const savedHeartless = insertHeartless(heartlessData);
+        const savedHeartless = await insertHeartless(heartlessData);
         res.status(201).json(savedHeartless);
     } catch (error) {
         res.status(500).json({ message: 'Error creating Heartless', error });
@@ -11,10 +11,10 @@ export async function createHeartless(req, res) {
 };
 
 export async function getHeartless(req, res) {
-    const { name } = req.query;
+    const { id } = req.params;
     try {
-        if (name) {
-            const heartless = await findHeartlessByName(name);
+        if (id) {
+            const heartless = await findHeartlessById(id);
             if (heartless) {
                 res.status(200).json(heartless);
             } else {
@@ -30,10 +30,10 @@ export async function getHeartless(req, res) {
 };
 
 export async function updHeartless(req, res) {
-    const { name } = req.query;
+    const { id } = req.params;
     const updatedHeartlessData = req.body;
     try {
-        const updatedHeartless = await updateHeartless(name, updatedHeartlessData);
+        const updatedHeartless = await updateHeartless(id, updatedHeartlessData);
         if (updatedHeartless) {
             res.status(200).json(updatedHeartless);
         } else {
@@ -45,9 +45,9 @@ export async function updHeartless(req, res) {
 };
 
 export async function delHeartless(req, res) {
-    const { name } = req.query;
+    const { id } = req.params;
     try {
-        const result = await deleteHeartless(name);
+        const result = await deleteHeartless(id);
         if (result) {
             res.status(200).json({ message: 'Heartless deleted successfully' });
         } else {

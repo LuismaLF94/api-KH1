@@ -4,10 +4,13 @@ import { getCharacter, createCharacter, updCharacter, delCharacter } from '../co
 
 const router = Router();
 
-router.get('/', getCharacter);
+router.get('/:id?', getCharacter);
+
 router.post('/', createCharacter);
-router.put('/', updCharacter);
-router.delete('/', delCharacter);
+
+router.put('/:id', updCharacter);
+
+router.delete('/:id', delCharacter);
 
 export default router;
 
